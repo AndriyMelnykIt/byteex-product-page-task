@@ -14,10 +14,21 @@ export interface HeroData {
     heroImages: Asset;
 }
 
-// TypeScript interface for Announcement Bar data
+export interface GalleryData {
+    gallery: Asset[];
+}
+
+
 export interface AnnouncementBarData {
     mobileAnnouncement: string;
     desktopAnnouncement: string;
+}
+
+export interface BestSelfData {
+    beYourBestSelf: string;
+    aboutImg?: Asset;
+    aboutDescription: any;
+    customizeYourOutfit: string;
 }
 
 // Fetch Hero Section data
@@ -61,6 +72,87 @@ export async function getHeroData(): Promise<HeroData | null> {
         return heroData;
     } catch (error) {
         console.error('Error fetching data from Contentful:', error);
+        return null;
+    }
+}
+
+export async function getGalleryData(): Promise<GalleryData | null> {
+    try {
+        const entries = await client.getEntries({
+            content_type: 'productPage',
+            limit: 1,
+            include: 10,
+        });
+
+        if (entries.items.length === 0) {
+            console.log('❌ No productPage entries found in Contentful');
+            return null;
+        }
+
+        const entry = entries.items[0] as Entry;
+        const fields = entry.fields as any;
+
+        let galleryAssets: Asset[] = [];
+        
+        if (fields.gallery && Array.isArray(fields.gallery)) {
+            console.log('✅ Gallery is array with', fields.gallery.length, 'items');
+            
+            galleryAssets = fields.gallery
+                .filter((item: any) => {
+                    const hasFile = !!item?.fields?.file;
+                    console.log('Item:', item, 'Has file:', hasFile);
+                    return hasFile;
+                })
+                .map((item: any) => item as Asset);
+        } else {
+            console.log('❌ Gallery is not an array or is undefined');
+        }
+
+        return {
+            gallery: galleryAssets,
+        };
+    } catch (error) {
+        console.error('❌ Error fetching gallery data from Contentful:', error);
+        return null;
+    }
+}
+
+export async function getBestSelfData(): Promise<BestSelfData | null> {
+    try {
+        const entries = await client.getEntries({
+            content_type: 'sectionBestSelf',
+            limit: 1,
+            include: 10,
+            locale: 'en-US',
+        });
+
+        if (entries.items.length === 0) {
+            console.log('❌ No sectionBestSelf entries found in Contentful');
+            return null;
+        }
+
+        const entry = entries.items[0] as Entry;
+        const fields = entry.fields as any;
+
+        let aboutImgAsset = fields.aboutImg;
+        
+        if (aboutImgAsset?.sys?.type === 'Link' && aboutImgAsset?.sys?.id) {
+            try {
+                aboutImgAsset = await client.getAsset(aboutImgAsset.sys.id);
+                console.log('🖼️ Fetched About Image Asset:', aboutImgAsset);
+            } catch (error) {
+                console.error('❌ Error fetching about image asset:', error);
+            }
+        }
+
+        return {
+            beYourBestSelf: fields.beYourBestSelf || '',
+            aboutImg: aboutImgAsset,
+            aboutDescription: fields.aboutDescription || null,
+            customizeYourOutfit: fields.customizeYourOutfit || '',
+        };
+    } catch (error) {
+        console.error('❌ Error fetching bestSelf data from Contentful:', error);
         return null;
     }
 }
