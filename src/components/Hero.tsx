@@ -77,7 +77,7 @@ function HeroSection({ title, features, ctaText, heroImages }: HeroSectionProps)
 
             {/* DESKTOP VERSION */}
             <div className="hidden lg:grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-                <div className="space-y-8">
+                <div className="space-y-8 -mt-42 lg:-mt-42">
                     <div className="space-y-4">
                         <h1 className="lg:max-w-[592px] font-['Sofia_Pro'] font-normal text-[38px] leading-[45px] tracking-[0.04em] text-[#01005B]">
                             {title}
