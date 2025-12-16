@@ -62,6 +62,17 @@ export interface ImpactData {
     energySaved: string;
 }
 
+export interface ProductGallerySectionData {
+    title: string;
+    subtitle: string;
+    images: Asset[];
+    buttonText: string;
+}
+
+export interface LogoData {
+    logo?: Asset;
+}
+
 // Fetch Hero Section data
 export async function getHeroData(): Promise<HeroData | null> {
     try {
@@ -329,6 +340,48 @@ export async function getImpactData(): Promise<ImpactData | null> {
     }
 }
 
+// Fetch Product Gallery Section data
+export async function getProductGalleryData(): Promise<ProductGallerySectionData | null> {
+    try {
+        const entries = await client.getEntries({
+            content_type: 'productGallerySection',
+            limit: 1,
+            include: 10,
+            locale: 'en-US',
+        });
+
+        if (entries.items.length === 0) {
+            return null;
+        }
+
+        const entry = entries.items[0] as Entry;
+        const fields = entry.fields as any;
+
+        let galleryAssets: Asset[] = [];
+        
+        const imageField = fields.productGallerySectionImg || fields.productGallerySectionimg || fields.images || fields.gallery;
+        
+        if (imageField && Array.isArray(imageField)) {
+            galleryAssets = imageField
+                .filter((item: any) => !!item?.fields?.file)
+                .map((item: any) => item as Asset);
+        } 
+        else if (imageField && imageField.fields?.file) {
+            galleryAssets = [imageField as Asset];
+        }
+
+        return {
+            title: fields.findSomethingYouLove || 'Find something you love',
+            subtitle: fields.productGallerySectionSub || 'Browse our collection of comfortable, sustainable loungewear designed for real life.',
+            images: galleryAssets,
+            buttonText: fields.customizeYourOutfit || 'Customize Your Outfit',
+        };
+    } catch (error) {
+        console.error('❌ Error fetching Product Gallery data from Contentful:', error);
+        return null;
+    }
+}
+
 // Fetch Announcement Bar data
 export async function getAnnouncementBarData(): Promise<AnnouncementBarData | null> {
     try {
@@ -355,6 +408,47 @@ export async function getAnnouncementBarData(): Promise<AnnouncementBarData | nu
         };
     } catch (error) {
         console.error('Error fetching announcementBar data from Contentful:', error);
+        return null;
+    }
+}
+
+// Fetch Logo data
+export async function getLogoData(): Promise<LogoData | null> {
+    try {
+        const entries = await client.getEntries({
+            content_type: 'productPage',
+            limit: 1,
+            include: 10,
+            locale: 'en-US',
+        });
+
+        if (entries.items.length === 0) {
+            return null;
+        }
+
+        const entry = entries.items[0] as Entry;
+        const fields = entry.fields as any;
+
+        const logoField = fields.logo || fields.Logo || fields.LOGO;
+
+        let logoAsset: Asset | undefined;
+
+        if (logoField?.sys?.type === 'Link' && logoField?.sys?.id) {
+            try {
+                const assetId = logoField.sys.id;
+                logoAsset = await client.getAsset(assetId);
+            } catch (error) {
+                console.error('❌ Error fetching logo asset:', error);
+            }
+        } else if (logoField && logoField.fields) {
+            logoAsset = logoField as Asset;
+        }
+
+        return {
+            logo: logoAsset,
+        };
+    } catch (error) {
+        console.error('❌ Error fetching Logo data from Contentful:', error);
         return null;
     }
 }

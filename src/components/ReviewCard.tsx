@@ -1,6 +1,5 @@
 import { Star } from 'lucide-react';
 import Image from 'next/image';
-import { placeholders } from '@/lib/placeholder';
 
 export function ReviewCard() {
     return (
@@ -9,7 +8,7 @@ export function ReviewCard() {
                 <div className="bg-white border-2 rounded-lg p-4 lg:p-6 max-w-[454px] w-full shadow-lg">
                     <div className="flex items-start gap-3 lg:gap-4">
                         <Image
-                            src={placeholders.avatar}
+                            src= '/color_wheel.png'
                             alt="Amy P."
                             width={40}
                             height={40}

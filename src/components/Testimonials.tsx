@@ -115,7 +115,7 @@ export function TestimonialsSection({title, description, galleryImages, customiz
                         ) : (
                             <div className="relative w-full">
                                 <Image
-                                    src="/Group 4522.jpg"
+                                    src="/Group_4522.jpg"
                                     alt="Customer testimonials gallery"
                                     width={1465}
                                     height={263}

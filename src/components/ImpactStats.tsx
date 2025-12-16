@@ -1,3 +1,7 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+
 interface ImpactSectionProps {
     title?: string;
     co2Saved?: string;
@@ -5,12 +9,99 @@ interface ImpactSectionProps {
     energySaved?: string;
 }
 
+function parseNumber(value: string): number {
+    const numStr = value.replace(/[^\d]/g, '');
+    return parseInt(numStr, 10) || 0;
+}
+
+function getUnit(value: string): string {
+    const match = value.match(/[a-zA-Z]+/);
+    return match ? ` ${match[0]}` : '';
+}
+
+function useCountUp(end: number, duration: number = 2000, isVisible: boolean) {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        if (!isVisible) return;
+
+        let startTime: number | null = null;
+        const startValue = 0;
+
+        const animate = (currentTime: number) => {
+            if (startTime === null) startTime = currentTime;
+            const progress = Math.min((currentTime - startTime) / duration, 1);
+
+            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+            const currentCount = Math.floor(startValue + (end - startValue) * easeOutQuart);
+
+            setCount(currentCount);
+
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                setCount(end);
+            }
+        };
+
+        requestAnimationFrame(animate);
+    }, [end, duration, isVisible]);
+
+    return count;
+}
+
 export function ImpactSection({
-    title,
-    co2Saved,
-    waterSaved,
-    energySaved
-}: ImpactSectionProps) {
+                                  title,
+                                  co2Saved,
+                                  waterSaved,
+                                  energySaved
+                              }: ImpactSectionProps) {
+    const sectionRef = useRef<HTMLDivElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setIsVisible(true);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
+        }
+
+        return () => {
+            if (sectionRef.current) {
+                observer.unobserve(sectionRef.current);
+            }
+        };
+    }, []);
+    const co2Value = "3,927 kg";
+    const waterValue = "2,546,167 days";
+    const energyValue = "7,321 kWh";
+
+    const co2Number = parseNumber(co2Value);
+    const waterNumber = parseNumber(waterValue);
+    const energyNumber = parseNumber(energyValue);
+
+    const co2Unit = getUnit(co2Value);
+    const waterUnit = getUnit(waterValue);
+    const energyUnit = getUnit(energyValue);
+
+    const co2Count = useCountUp(co2Number, 2000, isVisible);
+    const waterCount = useCountUp(waterNumber, 2500, isVisible);
+    const energyCount = useCountUp(energyNumber, 2000, isVisible);
+
+    const formatNumber = (num: number): string => {
+        return num.toLocaleString('en-US');
+    };
+
     const stats = [
         {
             icon: (
@@ -21,7 +112,7 @@ export function ImpactSection({
                     </svg>
                 </div>
             ),
-            value: "3,927 kg",
+            value: `${formatNumber(co2Count)}${co2Unit}`,
             label: co2Saved || "of CO2 saved",
         },
         {
@@ -33,7 +124,7 @@ export function ImpactSection({
                     </svg>
                 </div>
             ),
-            value: "2,546,167 days",
+            value: `${formatNumber(waterCount)}${waterUnit}`,
             label: waterSaved || "of drinking water saved",
         },
         {
@@ -44,23 +135,23 @@ export function ImpactSection({
                     </svg>
                 </div>
             ),
-            value: "7,321 kWh",
+            value: `${formatNumber(energyCount)}${energyUnit}`,
             label: energySaved || "of energy saved",
         },
     ]
 
     return (
-        <section className="bg-[#F0EEEF] w-full flex justify-center">
+        <section ref={sectionRef} className="bg-[#F0EEEF] w-full flex justify-center">
             <div className="w-full max-w-[1464px] min-h-[246px] px-4 py-8 md:py-0 flex flex-col justify-center items-center">
 
                 <div className="w-full text-center space-y-6 md:space-y-8">
-                    <h2 className="font-['Sofia_Pro'] text-3xl md:text-4xl font-normal text-[#01005B]">
+                    <h2 className="font-['Sofia_Pro'] text-2xl md:text-2xl font-normal text-[#01005B]">
                         {title || 'Our total green impact'}
                     </h2>
 
-                    <div className="flex flex-col md:flex-row items-center justify-center w-full md:divide-x divide-gray-300">
+                    <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-4xl mx-auto divide-x divide-gray-300">
                         {stats.map((stat, i) => (
-                            <div key={i} className="flex-1 px-4 py-6 md:py-0 w-full md:w-auto">
+                            <div key={i} className="flex-1 px-2 py-6 md:py-0 w-full md:w-auto">
                                 {stat.icon}
                                 <div className="space-y-1">
                                     <p className="font-['Sofia_Pro'] text-2xl md:text-[28px] font-bold text-[#01005B] leading-tight">
