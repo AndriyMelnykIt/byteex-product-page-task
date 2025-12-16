@@ -49,6 +49,12 @@ export interface TestimonialsData {
     customizeYourOutfit: string;
 }
 
+export interface FAQData {
+    title: string;
+    subtitle: string;
+    media?: Asset;
+}
+
 // Fetch Hero Section data
 export async function getHeroData(): Promise<HeroData | null> {
     try {
@@ -242,6 +248,47 @@ export async function getTestimonialsData(): Promise<TestimonialsData | null> {
             description: fields.testimonialssubTitle || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce lobortis sapien facilisis tincidunt pellentesque. In eget ipsum ut felis finibus consequat. Fusce non.',
             galleryImages: galleryAssets,
             customizeYourOutfit: fields.customizeYourOutfit || 'Customize Your Outfit',
+        };
+    } catch (error) {
+        return null;
+    }
+}
+
+// Fetch FAQ Section data
+export async function getFAQData(): Promise<FAQData | null> {
+    try {
+        const entries = await client.getEntries({
+            content_type: 'faqSection',
+            limit: 1,
+            include: 10,
+            locale: 'en-US',
+        });
+
+        if (entries.items.length === 0) {
+            return null;
+        }
+
+        const entry = entries.items[0] as Entry;
+        const fields = entry.fields as any;
+
+        // Get media asset
+        let mediaAsset: Asset | undefined;
+        
+        if (fields.faqSectionMedia && 'sys' in fields.faqSectionMedia && fields.faqSectionMedia.sys.type === 'Link') {
+            const assetId = fields.faqSectionMedia.sys.id;
+            try {
+                mediaAsset = await client.getAsset(assetId);
+            } catch (assetError) {
+                console.error('Error fetching FAQ media asset:', assetError);
+            }
+        } else if (fields.faqSectionMedia && 'fields' in fields.faqSectionMedia) {
+            mediaAsset = fields.faqSectionMedia as Asset;
+        }
+
+        return {
+            title: fields.frequentlyAskedQuestions || 'Frequently asked questions.',
+            subtitle: fields.faqSectionSubTitle || '',
+            media: mediaAsset,
         };
     } catch (error) {
         return null;
