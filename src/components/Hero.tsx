@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/Button"
-import { Star } from "lucide-react"
 import Image from "next/image"
 import { Asset } from 'contentful'
 
@@ -29,9 +28,9 @@ function HeroSection({ title, features, ctaText, heroImages }: HeroSectionProps)
     }
 
     return (
-        <section className="container mx-auto px-4 py-0">
+        <section className="container mx-auto px-4 py-0 pb-20 lg:pb-24">
 
-            <div className="max-w-[375px] mx-auto lg:hidden pt-1">
+            <div className="max-w-[375px] mx-auto lg:hidden">
 
                 <div className="mb-2 text-center">
                     <h1 className="font-['Sofia_Pro'] font-normal text-[26px] leading-[34px] tracking-[0.04em] text-[#01005B] inline-block">
@@ -69,36 +68,10 @@ function HeroSection({ title, features, ctaText, heroImages }: HeroSectionProps)
                     ))}
                 </div>
 
-                <div className="mb-6">
+                <div className="pb-6">
                     <Button className="w-full bg-blue-900 hover:bg-blue-800 text-white h-[56px] rounded-[5px] text-base">
                         {ctaText}
                     </Button>
-                </div>
-
-                <div className="pb-6"> {/* Відступ знизу для мобільного */}
-                    <div className="bg-white border border-gray-200 rounded-lg p-4 max-w-sm w-full shadow-sm mx-auto">
-                        <div className="flex items-start gap-3">
-                            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
-                                <span className="text-xs font-medium text-gray-600">AP</span>
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <span className="font-semibold text-sm text-gray-900">Amy P.</span>
-                                    <div className="flex gap-0.5">
-                                        {Array.from({ length: 5 }).map((_, i) => (
-                                            <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                                        ))}
-                                    </div>
-                                </div>
-                                <p className="text-[11px] text-gray-600 leading-relaxed">One of 500+ 5 Star Reviews Online</p>
-                                <p className="text-xs text-gray-700 mt-2 leading-relaxed">
-                                    Overjoyed with my Loungewear set. I have the jogger and the sweatshirt. Quality product on every
-                                    level. From the compostable packaging, to the supplied washing bag, even the garments smells like
-                                    fresh herbs when I first had them.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -134,32 +107,6 @@ function HeroSection({ title, features, ctaText, heroImages }: HeroSectionProps)
                         <Button className="bg-blue-900 hover:bg-blue-800 text-white px-8 h-12 rounded-full text-base">
                             {ctaText}
                         </Button>
-                    </div>
-
-                    <div className="pt-4 flex justify-center lg:justify-start">
-                        <div className="bg-white border border-gray-200 rounded-lg p-4 max-w-sm w-full shadow-sm">
-                            <div className="flex items-start gap-3">
-                                <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
-                                    <span className="text-xs font-medium text-gray-600">AP</span>
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <span className="font-semibold text-sm text-gray-900">Amy P.</span>
-                                        <div className="flex gap-0.5">
-                                            {Array.from({ length: 5 }).map((_, i) => (
-                                                <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <p className="text-xs text-gray-600 leading-relaxed">One of 500+ 5 Star Reviews Online</p>
-                                    <p className="text-xs text-gray-700 mt-2 leading-relaxed">
-                                        Overjoyed with my Loungewear set. I have the jogger and the sweatshirt. Quality product on every
-                                        level. From the compostable packaging, to the supplied washing bag, even the garments smells like
-                                        fresh herbs when I first had them.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 

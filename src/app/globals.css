@@ -130,3 +130,57 @@
     overflow-x: hidden;
   }
 }
+
+/* Swiper Custom Styles */
+.swiper-button-next,
+.swiper-button-prev {
+  width: 48px !important;
+  height: 48px !important;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 20px !important;
+  color: #333333;
+  font-weight: bold;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Position arrows outside the slider */
+.swiper-button-prev {
+  left: -70px !important;
+}
+
+.swiper-button-next {
+  right: -70px !important;
+}
+
+/* Hide arrows on mobile */
+@media (max-width: 1023px) {
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none !important;
+  }
+}
+
+.thumbs-swiper .swiper-slide {
+  opacity: 0.6;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  width: 31px !important;
+  height: 31px !important;
+}
+
+.thumbs-swiper .swiper-slide-thumb-active {
+  opacity: 1;
+  border: 2px solid #001058;
+  border-radius: 4px;
+}
