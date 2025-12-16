@@ -3,15 +3,17 @@ import HeroSection from "@/components/Hero";
 import {ReviewCard} from "@/components/ReviewCard";
 import {BestSelfSection} from "@/components/About";
 import Features from "@/components/Features";
-import {getHeroData, getGalleryData, getBestSelfData, getComfortSectionData} from '@/lib/contentful';
+import {getHeroData, getGalleryData, getBestSelfData, getComfortSectionData, getTestimonialsData} from '@/lib/contentful';
 import { AsSeenInSection } from "@/components/AsSeen";
 import {ComfortSection} from "@/components/Benefits";
+import {TestimonialsSection} from "@/components/Testimonials";
 
 export default async function Home() {
     const heroData = await getHeroData();
     const galleryData = await getGalleryData();
     const bestSelfData = await getBestSelfData();
     const comfortData = await getComfortSectionData();
+    const testimonialsData = await getTestimonialsData();
 
     return (
         <main className="min-h-screen bg-white">
@@ -54,6 +56,12 @@ export default async function Home() {
                     weShipYour={comfortData?.weShipYour}
                     wearHernest={comfortData?.wearHernest}
                     customizeYourOutfit={comfortData?.customizeYourOutfit}
+                />
+                <TestimonialsSection
+                    title={testimonialsData?.title}
+                    description={testimonialsData?.description}
+                    galleryImages={testimonialsData?.galleryImages}
+                    customizeYourOutfit={testimonialsData?.customizeYourOutfit}
                 />
             </div>
         </main>

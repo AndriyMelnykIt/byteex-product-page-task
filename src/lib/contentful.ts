@@ -42,6 +42,13 @@ export interface ComfortSectionData {
     customizeYourOutfit: string;
 }
 
+export interface TestimonialsData {
+    title: string;
+    description: string;
+    galleryImages: Asset[];
+    customizeYourOutfit: string;
+}
+
 // Fetch Hero Section data
 export async function getHeroData(): Promise<HeroData | null> {
     try {
@@ -198,6 +205,45 @@ export async function getComfortSectionData(): Promise<ComfortSectionData | null
         };
     } catch (error) {
         console.error('❌ Error fetching comfortSection data from Contentful:', error);
+        return null;
+    }
+}
+
+// Fetch Testimonials Section data
+export async function getTestimonialsData(): Promise<TestimonialsData | null> {
+    try {
+        const entries = await client.getEntries({
+            content_type: 'testimonialsSection',
+            limit: 1,
+            include: 10,
+            locale: 'en-US',
+        });
+
+        if (entries.items.length === 0) {
+            return null;
+        }
+
+        const entry = entries.items[0] as Entry;
+        const fields = entry.fields as any;
+
+        let galleryAssets: Asset[] = [];
+        
+        if (fields.testimonialsImg && Array.isArray(fields.testimonialsImg)) {
+            galleryAssets = fields.testimonialsImg
+                .filter((item: any) => {
+                    const hasFile = !!item?.fields?.file;
+                    return hasFile;
+                })
+                .map((item: any) => item as Asset);
+        }
+
+        return {
+            title: fields.whatAreOurFansSaying || 'What are our fans saying?',
+            description: fields.testimonialssubTitle || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce lobortis sapien facilisis tincidunt pellentesque. In eget ipsum ut felis finibus consequat. Fusce non.',
+            galleryImages: galleryAssets,
+            customizeYourOutfit: fields.customizeYourOutfit || 'Customize Your Outfit',
+        };
+    } catch (error) {
         return null;
     }
 }
