@@ -1,20 +1,9 @@
-import AnnouncementBar from './AnnouncementBar';
-
-export default function Header() {
-  return (
-    <header className="bg-white sticky top-0 z-50">
-      <AnnouncementBar />
-      <div>
-        <div style={{ paddingLeft: '100px', paddingRight: '100px' }}>
-          <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <div className="text-3xl font-black text-black tracking-tight">
-              BYTEEX
+export function Header() {
+    return (
+        <header className="py-1 md:py-6 px-4">
+            <div className="max-w-7xl flex justify-center md:justify-start">
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-900">BYTEEX</h1>
             </div>
-          </div>
-        </div>
-      </div>
-    </header>
-  );
+        </header>
+    )
 }
-

@@ -1,159 +1,182 @@
-import Image from 'next/image';
-import { placeholders } from '@/lib/placeholder';
-import { Sparkles, Package, Waves } from 'lucide-react';
-import { Asset } from 'contentful';
+import { Button } from "@/components/ui/Button"
+import { Star } from "lucide-react"
+import Image from "next/image"
+import { Asset } from 'contentful'
 
-interface HeroProps {
-  title?: string;
-  features?: string[];
-  ctaText?: string;
-  ctaLink?: string;
-  reviewerName?: string;
-  reviewText?: string;
-  reviewRating?: number;
-  heroImages?: Asset;
+interface HeroSectionProps {
+    title?: string;
+    features?: string[];
+    ctaText?: string;
+    heroImages?: Asset;
 }
 
-function Hero({
-  title,
-  features,
-  ctaText,
-  ctaLink = "#customize",
-  reviewerName = "Amy P.",
-  reviewText = "Overjoyed with my Loungewear set. I have the jogger and the sweatshirt. Quality product on every level. From the compostable packaging, to the supplied washing bag, even the garments smells like fresh herbs when I first held them.",
-  reviewRating = 5,
-  heroImages
-}: HeroProps) {
-  
-  if (!title || !features || !ctaText) {
-    return null;
-  }
+const icons = [
+    "/icon/Component 4.svg",
+    "/icon/Component 27.svg",
+    "/icon/Component 28.svg"
+];
 
-  let imageUrl = placeholders.hero;
-  
-  if (heroImages?.fields?.file?.url) {
-    const url = String(heroImages.fields.file.url);
-    imageUrl = url.startsWith('//') ? `https:${url}` : url;
-  }
-  
-  return (
-      <section className="bg-white py-16 lg:py-24 overflow-hidden">
-        <div style={{paddingLeft: '100px', paddingRight: '100px'}}>
-          <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start lg:items-center">
-          {/* Left Content */}
-          <div className="flex-1 lg:max-w-[500px]">
-            <h1 style={{
-              fontFamily: 'var(--font-inter), Inter, sans-serif',
-              fontSize: '38px',
-              lineHeight: '45px',
-              letterSpacing: '0.04em',
-              color: '#01005B',
-              fontWeight: 400,
-              marginBottom: '32px'
-            }}>
-              {title}
-            </h1>
+function HeroSection({ title, features, ctaText, heroImages }: HeroSectionProps) {
+    if (!title || !features || features.length === 0 || !ctaText) {
+        return null;
+    }
 
-              <div style={{ marginBottom: '32px' }}>
-                {features.map((feature, index) => {
-                  const icons = [Sparkles, Package, Waves];
-                  const Icon = icons[index] || Sparkles;
-                  return (
-                      <div key={index} style={{
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        gap: '12px',
-                        marginBottom: index < features.length - 1 ? '16px' : '0'
-                      }}>
-                        <Icon style={{
-                          width: '20px',
-                          height: '20px',
-                          color: '#8786B8',
-                          flexShrink: 0,
-                          marginTop: '2px'
-                        }} />
-                        <p style={{
-                          fontFamily: 'var(--font-inter), Inter, sans-serif',
-                          fontSize: '15px',
-                          lineHeight: '23px',
-                          letterSpacing: '0.03em',
-                          color: '#676869',
-                          fontWeight: 400
-                        }}>
-                          {feature}
-                        </p>
-                      </div>
-                  );
-                })}
-              </div>
+    let imageUrl = "https://placehold.co/600x400/f5f5f5/333333?text=Loungewear";
 
-            <a
-              href={ctaLink}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                width: '362px',
-                height: '56px',
-                backgroundColor: '#001058',
-                color: 'white',
-                borderRadius: '5px',
-                textDecoration: 'none',
-                fontWeight: 500,
-                fontSize: '16px',
-                marginBottom: '48px',
-                transition: 'background-color 0.2s'
-              }}
-              className="hover:bg-[#000040]"
-            >
-              {ctaText}
-              <span style={{ fontSize: '20px' }}>→</span>
-            </a>
+    if (heroImages?.fields?.file?.url) {
+        const url = String(heroImages.fields.file.url);
+        imageUrl = url.startsWith("//") ? `https:${url}` : url;
+    }
 
-              <div className="bg-white border border-gray-200 rounded-lg p-4 lg:p-6 max-w-[454px]">
-                <div className="flex items-start gap-3 lg:gap-4">
-                  <Image
-                      src={placeholders.avatar}
-                      alt={reviewerName}
-                      width={40}
-                      height={40}
-                      className="rounded-full flex-shrink-0 lg:w-12 lg:h-12"
-                      unoptimized
-                  />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="font-medium text-[#001058] text-sm lg:text-base">{reviewerName}</span>
-                      <div className="flex gap-0.5 text-yellow-400 text-xs lg:text-sm">
-                        {'★'.repeat(reviewRating)}
-                      </div>
-                    </div>
-                    <p className="text-[10px] lg:text-xs text-gray-500 mb-2">One of 500+ 5 Star Reviews Online</p>
-                    <p className="text-xs lg:text-sm text-gray-700 leading-relaxed">
-                      {reviewText}
-                    </p>
-                  </div>
+    return (
+        <section className="container mx-auto px-4 py-0">
+
+            <div className="max-w-[375px] mx-auto lg:hidden pt-1">
+
+                <div className="mb-2 text-center">
+                    <h1 className="font-['Sofia_Pro'] font-normal text-[26px] leading-[34px] tracking-[0.04em] text-[#01005B] inline-block">
+                        {title}
+                    </h1>
                 </div>
-              </div>
+
+                <div className="mb-2">
+                    <div className="relative w-full h-[260px] rounded-lg overflow-hidden bg-gray-50">
+                        <Image
+                            src={imageUrl}
+                            alt="Comfortable loungewear"
+                            fill
+                            className="object-contain"
+                            unoptimized
+                        />
+                    </div>
+                </div>
+
+                <div className="space-y-[15px] mb-6">
+                    {features.map((feature, index) => (
+                        <div key={index} className="flex items-start gap-2">
+                            <div className="w-10 h-10 shrink-0 flex items-center justify-center rounded-full bg-orange-50/50">
+                                <Image
+                                    src={icons[index] || icons[0]}
+                                    alt=""
+                                    width={24}
+                                    height={24}
+                                />
+                            </div>
+                            <p className="font-['Sofia_Pro'] font-normal text-[15px] leading-[23px] tracking-[0.03em] text-[#676869]">
+                                {feature}
+                            </p>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="mb-6">
+                    <Button className="w-full bg-blue-900 hover:bg-blue-800 text-white h-[56px] rounded-[5px] text-base">
+                        {ctaText}
+                    </Button>
+                </div>
+
+                <div className="pb-6"> {/* Відступ знизу для мобільного */}
+                    <div className="bg-white border border-gray-200 rounded-lg p-4 max-w-sm w-full shadow-sm mx-auto">
+                        <div className="flex items-start gap-3">
+                            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
+                                <span className="text-xs font-medium text-gray-600">AP</span>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-2 mb-1">
+                                    <span className="font-semibold text-sm text-gray-900">Amy P.</span>
+                                    <div className="flex gap-0.5">
+                                        {Array.from({ length: 5 }).map((_, i) => (
+                                            <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                                        ))}
+                                    </div>
+                                </div>
+                                <p className="text-[11px] text-gray-600 leading-relaxed">One of 500+ 5 Star Reviews Online</p>
+                                <p className="text-xs text-gray-700 mt-2 leading-relaxed">
+                                    Overjoyed with my Loungewear set. I have the jogger and the sweatshirt. Quality product on every
+                                    level. From the compostable packaging, to the supplied washing bag, even the garments smells like
+                                    fresh herbs when I first had them.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            {/* Right Images */}
-            <div className="flex-1 flex justify-center lg:justify-end">
-              <div className="relative" style={{ width: '725px', height: '422px' }}>
-                <Image
-                  src={imageUrl}
-                  alt="Hero loungewear collection"
-                  fill
-                  className="object-cover rounded-lg"
-                  unoptimized
-                />
-              </div>
+            {/* DESKTOP VERSION */}
+            <div className="hidden lg:grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+                <div className="space-y-8">
+                    <div className="space-y-4">
+                        <h1 className="lg:max-w-[592px] font-['Sofia_Pro'] font-normal text-[38px] leading-[45px] tracking-[0.04em] text-[#01005B]">
+                            {title}
+                        </h1>
+                    </div>
+
+                    <div className="space-y-[15px]">
+                        {features.map((feature, index) => (
+                            <div key={index} className="flex items-start gap-2">
+                                <div className="w-10 h-10 shrink-0 flex items-center justify-center rounded-full bg-orange-50/50">
+                                    <Image
+                                        src={icons[index] || icons[0]}
+                                        alt=""
+                                        width={31}
+                                        height={31}
+                                        className="w-6 h-6 text-blue-900"
+                                    />
+                                </div>
+                                <p className="lg:pt-2 font-['Sofia_Pro'] font-normal text-[15px] leading-[23px] tracking-[0.03em] text-[#676869]">
+                                    {feature}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="flex justify-center lg:justify-start">
+                        <Button className="bg-blue-900 hover:bg-blue-800 text-white px-8 h-12 rounded-full text-base">
+                            {ctaText}
+                        </Button>
+                    </div>
+
+                    <div className="pt-4 flex justify-center lg:justify-start">
+                        <div className="bg-white border border-gray-200 rounded-lg p-4 max-w-sm w-full shadow-sm">
+                            <div className="flex items-start gap-3">
+                                <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
+                                    <span className="text-xs font-medium text-gray-600">AP</span>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <span className="font-semibold text-sm text-gray-900">Amy P.</span>
+                                        <div className="flex gap-0.5">
+                                            {Array.from({ length: 5 }).map((_, i) => (
+                                                <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <p className="text-xs text-gray-600 leading-relaxed">One of 500+ 5 Star Reviews Online</p>
+                                    <p className="text-xs text-gray-700 mt-2 leading-relaxed">
+                                        Overjoyed with my Loungewear set. I have the jogger and the sweatshirt. Quality product on every
+                                        level. From the compostable packaging, to the supplied washing bag, even the garments smells like
+                                        fresh herbs when I first had them.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="relative h-[600px]">
+                    <div className="absolute top-0 left-0 w-full h-full">
+                        <Image
+                            src={imageUrl}
+                            alt="Comfortable loungewear"
+                            fill
+                            className="object-cover rounded-lg"
+                            unoptimized
+                        />
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </section>
-  );
+        </section>
+    )
 }
 
-export default Hero
-
+export default HeroSection
