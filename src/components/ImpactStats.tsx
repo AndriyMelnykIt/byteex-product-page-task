@@ -31,10 +31,10 @@ function useCountUp(end: number, duration: number = 2000, isVisible: boolean) {
         const animate = (currentTime: number) => {
             if (startTime === null) startTime = currentTime;
             const progress = Math.min((currentTime - startTime) / duration, 1);
-            
+
             const easeOutQuart = 1 - Math.pow(1 - progress, 4);
             const currentCount = Math.floor(startValue + (end - startValue) * easeOutQuart);
-            
+
             setCount(currentCount);
 
             if (progress < 1) {
@@ -51,11 +51,11 @@ function useCountUp(end: number, duration: number = 2000, isVisible: boolean) {
 }
 
 export function ImpactSection({
-    title,
-    co2Saved,
-    waterSaved,
-    energySaved
-}: ImpactSectionProps) {
+                                  title,
+                                  co2Saved,
+                                  waterSaved,
+                                  energySaved
+                              }: ImpactSectionProps) {
     const sectionRef = useRef<HTMLDivElement>(null);
     const [isVisible, setIsVisible] = useState(false);
 
@@ -145,13 +145,13 @@ export function ImpactSection({
             <div className="w-full max-w-[1464px] min-h-[246px] px-4 py-8 md:py-0 flex flex-col justify-center items-center">
 
                 <div className="w-full text-center space-y-6 md:space-y-8">
-                    <h2 className="font-['Sofia_Pro'] text-3xl md:text-4xl font-normal text-[#01005B]">
+                    <h2 className="font-['Sofia_Pro'] text-2xl md:text-2xl font-normal text-[#01005B]">
                         {title || 'Our total green impact'}
                     </h2>
 
-                    <div className="flex flex-col md:flex-row items-center justify-center w-full md:divide-x divide-gray-300">
+                    <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-4xl mx-auto divide-x divide-gray-300">
                         {stats.map((stat, i) => (
-                            <div key={i} className="flex-1 px-4 py-6 md:py-0 w-full md:w-auto">
+                            <div key={i} className="flex-1 px-2 py-6 md:py-0 w-full md:w-auto">
                                 {stat.icon}
                                 <div className="space-y-1">
                                     <p className="font-['Sofia_Pro'] text-2xl md:text-[28px] font-bold text-[#01005B] leading-tight">

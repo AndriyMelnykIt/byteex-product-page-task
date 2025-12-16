@@ -58,7 +58,7 @@ export function ProductGallerySection({
                     alt={String(image.title)}
                     width={350}
                     height={450}
-                    className="object-cover w-full max-w-2xl h-auto rounded-lg"
+                    className="object-cover w-full max-w-xl h-auto rounded-lg"
                     unoptimized
                 />
             ))}
@@ -99,6 +99,7 @@ export function ProductGallerySection({
               </div>
             </div>
 
+            <div className="hidden md:block h-10 w-px bg-gray-300 mx-5"></div>
             <div className="flex items-center gap-2">
               <div className="w-12 h-12 rounded-full bg-[#F0EEEF] flex items-center justify-center text-[#676869] shrink-0">
                 <ShieldCheck className="w-5 h-5" strokeWidth={1.5} />
@@ -109,6 +110,8 @@ export function ProductGallerySection({
                 </p>
               </div>
             </div>
+
+            <div className="hidden md:block h-10 w-px bg-gray-300 mx-5"></div>
 
             <div className="flex items-center gap-2">
               <div className="w-12 h-12 rounded-full bg-[#F0EEEF] flex items-center justify-center text-[#676869] shrink-0">
