@@ -3,13 +3,15 @@ import HeroSection from "@/components/Hero";
 import {ReviewCard} from "@/components/ReviewCard";
 import {BestSelfSection} from "@/components/About";
 import Features from "@/components/Features";
-import {getHeroData, getGalleryData, getBestSelfData} from '@/lib/contentful';
+import {getHeroData, getGalleryData, getBestSelfData, getComfortSectionData} from '@/lib/contentful';
 import { AsSeenInSection } from "@/components/AsSeen";
+import {ComfortSection} from "@/components/Benefits";
 
 export default async function Home() {
     const heroData = await getHeroData();
     const galleryData = await getGalleryData();
     const bestSelfData = await getBestSelfData();
+    const comfortData = await getComfortSectionData();
 
     return (
         <main className="min-h-screen bg-white">
@@ -42,6 +44,16 @@ export default async function Home() {
                     aboutImg={bestSelfData?.aboutImg}
                     aboutDescription={bestSelfData?.aboutDescription}
                     customizeYourOutfit={bestSelfData?.customizeYourOutfit}
+                />
+                <ComfortSection
+                    comfortMadeEasy={comfortData?.comfortMadeEasy}
+                    youSave={comfortData?.youSave}
+                    weShip={comfortData?.weShip}
+                    youEnjoy={comfortData?.youEnjoy}
+                    browseOur={comfortData?.browseOur}
+                    weShipYour={comfortData?.weShipYour}
+                    wearHernest={comfortData?.wearHernest}
+                    customizeYourOutfit={comfortData?.customizeYourOutfit}
                 />
             </div>
         </main>

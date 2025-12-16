@@ -82,7 +82,7 @@ export function BestSelfSection({beYourBestSelf, aboutImg, aboutDescription, cus
                 )}
               </div>
 
-              <Button className="bg-blue-900 hover:bg-blue-800 text-white px-8">
+              <Button className="bg-[#01005B] hover:bg-blue-800 text-white px-8">
                 {buttonText}
               </Button>
             </div>
