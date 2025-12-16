@@ -55,6 +55,13 @@ export interface FAQData {
     media?: Asset;
 }
 
+export interface ImpactData {
+    title: string;
+    co2Saved: string;
+    waterSaved: string;
+    energySaved: string;
+}
+
 // Fetch Hero Section data
 export async function getHeroData(): Promise<HeroData | null> {
     try {
@@ -289,6 +296,33 @@ export async function getFAQData(): Promise<FAQData | null> {
             title: fields.frequentlyAskedQuestions || 'Frequently asked questions.',
             subtitle: fields.faqSectionSubTitle || '',
             media: mediaAsset,
+        };
+    } catch (error) {
+        return null;
+    }
+}
+
+// Fetch Impact Section data
+export async function getImpactData(): Promise<ImpactData | null> {
+    try {
+        const entries = await client.getEntries({
+            content_type: 'impactSection',
+            limit: 1,
+            locale: 'en-US',
+        });
+
+        if (entries.items.length === 0) {
+            return null;
+        }
+
+        const entry = entries.items[0] as Entry;
+        const fields = entry.fields as any;
+
+        return {
+            title: fields.ourTotalGreenImpact || 'Our total green impact',
+            co2Saved: fields.ofCo2Saved || 'of CO2 saved',
+            waterSaved: fields.ofDrinkingWaterSaved || 'of drinking water saved',
+            energySaved: fields.ofEnergySaved || 'of energy saved',
         };
     } catch (error) {
         return null;
