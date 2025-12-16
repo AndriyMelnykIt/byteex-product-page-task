@@ -104,7 +104,7 @@ function HeroSection({ title, features, ctaText, heroImages }: HeroSectionProps)
                     </div>
 
                     <div className="flex justify-center lg:justify-start">
-                        <Button className="bg-blue-900 hover:bg-blue-800 text-white px-8 h-12 rounded-full text-base">
+                        <Button className="bg-[#01005B] hover:bg-blue-800 text-white px-8 h-12 rounded-full text-base">
                             {ctaText}
                         </Button>
                     </div>

@@ -31,6 +31,17 @@ export interface BestSelfData {
     customizeYourOutfit: string;
 }
 
+export interface ComfortSectionData {
+    comfortMadeEasy: string;
+    youSave: string;
+    weShip: string;
+    youEnjoy: string;
+    browseOur: string;
+    weShipYour: string;
+    wearHernest: string;
+    customizeYourOutfit: string;
+}
+
 // Fetch Hero Section data
 export async function getHeroData(): Promise<HeroData | null> {
     try {
@@ -153,6 +164,40 @@ export async function getBestSelfData(): Promise<BestSelfData | null> {
         };
     } catch (error) {
         console.error('❌ Error fetching bestSelf data from Contentful:', error);
+        return null;
+    }
+}
+
+// Fetch Comfort Section data
+export async function getComfortSectionData(): Promise<ComfortSectionData | null> {
+    try {
+        const entries = await client.getEntries({
+            content_type: 'comfortSection',
+            limit: 1,
+            locale: 'en-US',
+        });
+
+
+        if (entries.items.length === 0) {
+            console.log('❌ No comfortSection entries found in Contentful');
+            return null;
+        }
+
+        const entry = entries.items[0] as Entry;
+        const fields = entry.fields as any;
+
+        return {
+            comfortMadeEasy: fields.comfortMadeEasy || 'Comfort made easy',
+            youSave: fields.youSave || 'You save.',
+            weShip: fields.weShip || 'We ship.',
+            youEnjoy: fields.youEnjoy || 'You enjoy!',
+            browseOur: fields.browseOur || 'Browse our comfort sets and save 15% when you bundle.',
+            weShipYour: fields.weShipYour || 'We ship your items within 1-2 days of receiving your order.',
+            wearHernest: fields.wearHernest || 'Wear loungewear around the house, out on the town, or in bed.',
+            customizeYourOutfit: fields.customizeYourOutfit || 'Customize Your Outfit',
+        };
+    } catch (error) {
+        console.error('❌ Error fetching comfortSection data from Contentful:', error);
         return null;
     }
 }
