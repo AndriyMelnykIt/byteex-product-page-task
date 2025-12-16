@@ -3,10 +3,12 @@ import HeroSection from "@/components/Hero";
 import {ReviewCard} from "@/components/ReviewCard";
 import {BestSelfSection} from "@/components/About";
 import Features from "@/components/Features";
-import {getHeroData, getGalleryData, getBestSelfData, getComfortSectionData, getTestimonialsData} from '@/lib/contentful';
+import {getHeroData, getGalleryData, getBestSelfData, getComfortSectionData, getTestimonialsData, getFAQData, getImpactData} from '@/lib/contentful';
 import { AsSeenInSection } from "@/components/AsSeen";
 import {ComfortSection} from "@/components/Benefits";
 import {TestimonialsSection} from "@/components/Testimonials";
+import {FAQSection} from "@/components/FAQ";
+import {ImpactSection} from "@/components/ImpactStats";
 
 export default async function Home() {
     const heroData = await getHeroData();
@@ -14,6 +16,8 @@ export default async function Home() {
     const bestSelfData = await getBestSelfData();
     const comfortData = await getComfortSectionData();
     const testimonialsData = await getTestimonialsData();
+    const faqData = await getFAQData();
+    const impactData = await getImpactData();
 
     return (
         <main className="min-h-screen bg-white">
@@ -62,6 +66,16 @@ export default async function Home() {
                     description={testimonialsData?.description}
                     galleryImages={testimonialsData?.galleryImages}
                     customizeYourOutfit={testimonialsData?.customizeYourOutfit}
+                />
+                <FAQSection
+                    title={faqData?.title}
+                    media={faqData?.media}
+                />
+                <ImpactSection
+                    title={impactData?.title}
+                    co2Saved={impactData?.co2Saved}
+                    waterSaved={impactData?.waterSaved}
+                    energySaved={impactData?.energySaved}
                 />
             </div>
         </main>
