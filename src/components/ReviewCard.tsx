@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export function ReviewCard() {
     return (
-        <section className="relative -mt-16 lg:-mt-20 mb-8 lg:mb-12 z-10">
+        <section className="relative md:-mt-2 lg:-mt-20 mb-8 lg:mb-12 z-10">
             <div className="container mx-auto px-4 flex justify-center">
                 <div className="bg-white border-2 rounded-lg p-4 lg:p-6 max-w-[454px] w-full shadow-lg">
                     <div className="flex items-start gap-3 lg:gap-4">

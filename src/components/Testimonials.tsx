@@ -87,13 +87,13 @@ export function TestimonialsSection({title, description, galleryImages, customiz
             `}</style>
 
             <div className="container mx-auto px-4">
-                <div className="text-center space-y-8">
+                <div className="text-center space-y-6 md:space-y-8">
 
-                    <h2 className="font-['Sofia_Pro'] font-normal text-[32px] leading-[40px] tracking-[0.04em] text-[#01005B] text-center">
+                    <h2 className="font-['Sofia_Pro'] font-normal text-[24px] md:text-[28px] lg:text-[32px] leading-[32px] md:leading-[36px] lg:leading-[40px] tracking-[0.04em] text-[#01005B] text-center">
                         {title || 'What are our fans saying?'}
                     </h2>
 
-                    <p className="font-['Sofia_Pro'] font-normal text-[15px] leading-[23px] tracking-[0.03em] text-[#676869] text-center max-w-2xl mx-auto">
+                    <p className="font-['Sofia_Pro'] font-normal text-[14px] md:text-[15px] leading-[20px] md:leading-[23px] tracking-[0.03em] text-[#676869] text-center max-w-2xl mx-auto px-2">
                         {description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce lobortis sapien facilisis tincidunt pellentesque. In eget ipsum et felis finibus consequat. Fusce non nibh luctus.'}
                     </p>
 
@@ -141,12 +141,15 @@ export function TestimonialsSection({title, description, galleryImages, customiz
                             breakpoints={{
                                 640: {
                                     slidesPerView: 1.5,
+                                    spaceBetween: 0,
                                 },
                                 768: {
                                     slidesPerView: 2,
+                                    spaceBetween: 20,
                                 },
                                 1024: {
                                     slidesPerView: 2.4,
+                                    spaceBetween: 24,
                                 }
                             }}
                             className="testimonials-swiper"

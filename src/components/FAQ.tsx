@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Plus, Minus } from "lucide-react"
 import Image from "next/image"
 import { Asset } from "contentful"
+import { Button } from "@/components/ui/Button"
 
 interface FAQSectionProps {
   title?: string;
@@ -53,12 +54,12 @@ export function FAQSection({ title, media }: FAQSectionProps) {
   }
 
   return (
-      <section className="py-16 md:py-20">
+      <section className="pt-4 md:pt-8 lg:pt-12 pb-12 md:pb-16 lg:pb-20">
         <div className="container mx-auto px-4">
-          <div className="grid gap-12 lg:grid-cols-2 items-start">
-            <div className="space-y-6">
+          <div className="grid gap-8 md:gap-12 lg:grid-cols-2 items-start">
+            <div className="space-y-4 md:space-y-6">
               <div>
-                <h2 className="font-['Sofia_Pro'] font-normal text-[32px] leading-[40px] tracking-[0.04em] text-[#01005B] mb-[60px]">
+                <h2 className="font-['Sofia_Pro'] font-normal text-[24px] md:text-[28px] lg:text-[32px] leading-[32px] md:leading-[36px] lg:leading-[40px] tracking-[0.04em] text-[#01005B] mb-6 md:mb-[60px] text-center">
                   {title || 'Frequently asked questions.'}
                 </h2>
               </div>
@@ -83,9 +84,21 @@ export function FAQSection({ title, media }: FAQSectionProps) {
                     </div>
                 ))}
               </div>
+
+              <div className="pt-8 flex flex-col items-center md:hidden">
+                <Button className="bg-[#01005B] hover:bg-blue-800 text-white px-8">
+                  Customize Your Outfit →
+                </Button>
+                <div className="flex items-center justify-center gap-1 mt-3">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <span key={i} className="text-yellow-400 text-sm">★</span>
+                  ))}
+                  <span className="text-xs text-gray-600 ml-2">Over 500+ 5 Star Reviews Online</span>
+                </div>
+              </div>
             </div>
 
-            <div className="relative h-[600px] lg:h-[750px] w-full">
+            <div className="hidden md:block relative h-[300px] md:h-[400px] lg:h-[750px] w-full order-1 lg:order-2">
               {imageUrl ? (
                   <div className="relative w-full h-full">
                     <Image
