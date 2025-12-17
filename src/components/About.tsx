@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/Button";
 import Image from "next/image";
 import { Asset } from "contentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
@@ -20,13 +19,16 @@ export function BestSelfSection({beYourBestSelf, aboutImg, aboutDescription, cus
   }
 
   const title = beYourBestSelf || "Be your best self.";
-  const buttonText = customizeYourOutfit || "Customize Your Outfit";
 
   return (
-      <section className="py-16 md:py-20 bg-[#F0EEEF]">
+      <section className="py-12 md:py-16 lg:py-20 bg-[#F0EEEF]">
         <div className="container mx-auto px-4">
-          <div className="grid gap-12 lg:grid-cols-2 items-center">
-            <div className="relative h-[400px] lg:h-[600px] w-full flex justify-center">
+          <h2 className="font-['Sofia_Pro'] font-normal text-[24px] md:text-[28px] lg:text-[32px] leading-[32px] md:leading-[36px] lg:leading-[40px] tracking-[0.04em] text-[#2A2996] text-center mb-8 md:mb-12">
+            {title}
+          </h2>
+
+          <div className="grid gap-8 md:gap-12 lg:grid-cols-2 items-center">
+            <div className="relative h-[300px] md:h-[400px] lg:h-[600px] w-full flex justify-center order-1">
               <div className="relative w-full h-full">
                 <Image
                     src={imageUrl}
@@ -38,11 +40,7 @@ export function BestSelfSection({beYourBestSelf, aboutImg, aboutDescription, cus
               </div>
             </div>
 
-            <div className="space-y-6">
-              <h2 className="font-['Sofia_Pro'] font-normal text-[32px] leading-[40px] tracking-[0.04em] text-[#2A2996]">
-                {title}
-              </h2>
-
+            <div className="space-y-4 md:space-y-6 order-2">
               <div className="space-y-4 font-['Sofia_Pro'] font-normal text-[15px] leading-[23px] tracking-[0.03em] text-[#6C6C6C]">
                 {aboutDescription ? (
                     documentToReactComponents(aboutDescription)
@@ -81,10 +79,6 @@ export function BestSelfSection({beYourBestSelf, aboutImg, aboutDescription, cus
                     </>
                 )}
               </div>
-
-              <Button className="bg-[#01005B] hover:bg-blue-800 text-white px-8">
-                {buttonText}
-              </Button>
             </div>
           </div>
         </div>

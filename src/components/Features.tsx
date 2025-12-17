@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { Asset } from 'contentful';
+import { Button } from '@/components/ui/Button';
 
 import 'swiper/css';
 import 'swiper/css/free-mode';
@@ -53,27 +54,34 @@ export default function Features({ gallery }: FeaturesProps) {
   }).filter(item => item.url) || [];
 
   return (
-      <section className="bg-white py-16 lg:py-24">
-        <div style={{ paddingLeft: '100px', paddingRight: '100px' }}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-            <div className="space-y-8 lg:space-y-10">
+      <section className="bg-white md:pt-6 lg:pt-12 pb-16 lg:pb-24">
+        <div className="container mx-auto px-4 lg:px-[100px]">
+          <h2 className="text-[32px] leading-[40px] tracking-[0.04em] font-normal text-[#001058] font-['Sofia_Pro'] text-center lg:text-left mb-8 lg:mb-0 lg:hidden">
+            Loungewear you can be proud of.
+          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20">
+            <div className="space-y-8 lg:space-y-10 order-2 lg:order-1">
 
-              <h2 className="text-[32px] leading-[40px] tracking-[0.04em] font-normal text-[#001058] font-['Sofia_Pro']">
+              <h2 className="hidden lg:block text-[32px] leading-[40px] tracking-[0.04em] font-normal text-[#001058] font-['Sofia_Pro'] text-center lg:text-left">
                 Loungewear you can be proud of.
               </h2>
 
               <div className="space-y-6 lg:space-y-8">
                 {features.map((feature, index) => (
-                    <div key={index} className="flex gap-4">
-                      <div className="flex-shrink-0 relative w-5 h-5 lg:w-6 lg:h-6 mt-1">
-                        <Image
-                            src={feature.icon}
-                            alt={feature.title}
-                            fill
-                            className="object-contain"
-                        />
+                    <div key={index} className="flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:gap-4">
+                      <div className="flex-shrink-0 relative w-12 h-12 lg:w-6 lg:h-6 lg:mt-1 flex items-center justify-center">
+                        <div className="w-12 h-12 lg:w-5 lg:h-5 rounded-full bg-[#F9F0E5] flex items-center justify-center lg:bg-transparent">
+                          <div className="relative w-6 h-6 lg:w-5 lg:h-5">
+                            <Image
+                                src={feature.icon}
+                                alt={feature.title}
+                                fill
+                                className="object-contain"
+                            />
+                          </div>
+                        </div>
                       </div>
-                      <div>
+                      <div className="flex-1 text-center lg:text-left w-full lg:w-auto">
                         <h3 className="text-[16px] lg:text-[18px] font-medium text-[#001058] mb-2">
                           {feature.title}
                         </h3>
@@ -81,12 +89,30 @@ export default function Features({ gallery }: FeaturesProps) {
                           {feature.description}
                         </p>
                       </div>
+                      {index < features.length - 1 && (
+                          <div className="w-full h-px bg-gray-200 lg:hidden mt-2"></div>
+                      )}
                     </div>
                 ))}
               </div>
+
+              <div className="flex flex-col items-center mt-8 lg:hidden">
+                <Button className="bg-[#01005B] hover:bg-blue-800 text-white px-8 py-3 rounded-lg text-base font-medium flex items-center gap-2 mb-3">
+                  Customize Your Outfit
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Button>
+                <div className="flex items-center justify-center gap-1">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <span key={i} className="text-yellow-400 text-sm">★</span>
+                  ))}
+                  <span className="text-xs text-gray-600 ml-2">Over 500+ 5 Star Reviews Online</span>
+                </div>
+              </div>
             </div>
 
-            <div className="relative lg:px-20 group">
+            <div className="relative lg:px-20 group order-1 lg:order-2">
               <div className="relative rounded-lg">
                 <Swiper
                     style={{

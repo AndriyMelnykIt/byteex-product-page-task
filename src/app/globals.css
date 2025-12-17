@@ -223,3 +223,43 @@
   border: 2px solid #001058;
   border-radius: 4px;
 }
+
+/* As Seen In Swiper Pagination */
+.as-seen-swiper .swiper-pagination {
+  position: relative;
+  margin-top: 20px;
+  bottom: auto;
+}
+
+.as-seen-swiper .swiper-pagination-bullet {
+  width: 6px;
+  height: 6px;
+  background: #D1D5DB;
+  opacity: 0.5;
+  margin: 0 4px;
+  transition: all 0.3s ease;
+}
+
+.as-seen-swiper .swiper-pagination-bullet-active {
+  background: #111827;
+  opacity: 1;
+  width: 6px;
+  height: 6px;
+}
+
+/* Comfort Section Swiper */
+.comfort-swiper {
+  padding: 20px 0;
+}
+
+.comfort-prev,
+.comfort-next {
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.comfort-prev:hover,
+.comfort-next:hover {
+  opacity: 0.8;
+}

@@ -24,7 +24,7 @@ export async function Header() {
     return (
         <>
             <AnnouncementBar mobileText={mobileText} desktopText={desktopText} />
-            <header className="py-1 md:py-6 px-4">
+            <header className="pt-4 pb-1 md:py-6 px-4">
                 <div className="max-w-7xl flex justify-center md:justify-start items-center">
                     {hasLogo ? (
                         <Image
